@@ -26,7 +26,7 @@ public class InventoryFilterListener implements Listener {
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event){
 
-        System.out.println("Scanning inventory");
+        System.out.println("Scanning inventory "+event.getInventory().getHolder());
 
         ItemStack[] inventoryContent = event.getInventory().getContents();
 

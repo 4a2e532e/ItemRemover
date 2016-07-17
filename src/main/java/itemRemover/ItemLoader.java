@@ -29,6 +29,9 @@ public class ItemLoader {
 
     public void load(){
         for(String key: itemsConfig.getKeys(false)){
+
+            System.out.println("Loading item "+key);
+
             ConfigurationSection configSection = itemsConfig.getConfigurationSection(key);
             filterListener.markItemForRemoval(createItemStack(configSection));
         }
