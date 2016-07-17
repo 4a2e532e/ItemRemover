@@ -15,7 +15,7 @@
         </repository>
     </repositories>
     <build>
-        <finalName>ItemRemover.jar</finalName>
+        <finalName>ItemRemover</finalName>
         <resources>
             <resource>
                 <directory></directory>
