@@ -18,6 +18,7 @@
         <finalName>ItemRemover.jar</finalName>
         <resources>
             <resource>
+                <directory></directory>
                 <includes>
                     <include>plugin.yml</include>
                     <include>LICENSE.txt</include>
