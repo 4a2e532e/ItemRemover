@@ -1,5 +1,7 @@
 package itemRemover;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,8 +32,6 @@ public class ItemLoader {
     public void load(){
         for(String key: itemsConfig.getKeys(false)){
 
-            System.out.println("Loading item "+key);
-
             ConfigurationSection configSection = itemsConfig.getConfigurationSection(key);
             filterListener.markItemForRemoval(createItemStack(configSection));
         }
@@ -41,7 +41,6 @@ public class ItemLoader {
         ItemStack itemStack = new ItemStack(Material.valueOf(configSection.getString("Material")));
         ItemMeta meta = itemStack.getItemMeta();
 
-        System.out.println("Setting lore to "+(List<String>) configSection.getList("Lore"));
         meta.setLore((List<String>) configSection.getList("Lore"));
 
         ConfigurationSection enchantments = configSection.getConfigurationSection("Enchantments");
@@ -50,14 +49,11 @@ public class ItemLoader {
             for(String enchant: enchantments.getKeys(false)){
                 if(Enchantment.getByName(enchant) != null){
                     meta.addEnchant(Enchantment.getByName(enchant), enchantments.getInt(enchant), true);
-                    System.out.println("Adding enchantment "+Enchantment.getByName(enchant)+" with level "+enchantments.getInt(enchant));
                 }
             }
         }
 
         itemStack.setItemMeta(meta);
-
-        System.out.println("Loaded "+itemStack);
 
         return itemStack;
     }

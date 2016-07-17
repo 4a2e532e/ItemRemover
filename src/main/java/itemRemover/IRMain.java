@@ -1,8 +1,11 @@
 package itemRemover;
 
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class IRMain extends JavaPlugin {
+
+    public static String prefix = ChatColor.AQUA+"[ItemRemover] "+ChatColor.RESET;
 
     private ItemLoader itemLoader;
     private InventoryFilterListener inventoryFilterListener;

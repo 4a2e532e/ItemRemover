@@ -1,5 +1,7 @@
 package itemRemover;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +18,7 @@ public class InventoryFilterListener implements Listener {
     public void markItemForRemoval(ItemStack item){
         itemsToRemove.add(item);
 
-        System.out.println("Marked "+item+" for removal");
+        Bukkit.getConsoleSender().sendMessage(IRMain.prefix+ChatColor.GREEN+"Marked " + ChatColor.DARK_GREEN + item + ChatColor.GREEN + " for removal");
     }
 
     public void clearRemovalList(){
@@ -26,20 +28,21 @@ public class InventoryFilterListener implements Listener {
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event){
 
-        System.out.println("Scanning inventory "+event.getInventory().getHolder());
+        Bukkit.getConsoleSender().sendMessage(IRMain.prefix+"Scanning inventory "+event.getInventory().getHolder());
 
         ItemStack[] inventoryContent = event.getInventory().getContents();
 
         for(ItemStack item: inventoryContent){
             if(shouldItemBeRemoved(item)){
-                System.out.println("Found "+item+" removing it");
-                item.setType(Material.STICK);
+                Bukkit.getConsoleSender().sendMessage(IRMain.prefix+"Found "+item+" removing it");
+                event.getInventory().remove(item);
             }
         }
     }
 
     private boolean shouldItemBeRemoved(ItemStack itemInInventory){
         for(ItemStack removableItem: itemsToRemove){
+
             if(itemInInventory != null && itemInInventory.getType() == removableItem.getType()){
                 ItemMeta removableMeta = removableItem.getItemMeta();
                 ItemMeta inInventoryMeta = itemInInventory.getItemMeta();
@@ -47,14 +50,11 @@ public class InventoryFilterListener implements Listener {
                 if(inInventoryMeta.getEnchants().equals(removableMeta.getEnchants())){
 
                     if(inInventoryMeta.hasLore() && removableMeta.hasLore()){
-                        System.out.println("Lore is present");
 
                         if(inInventoryMeta.getLore().equals(removableMeta.getLore())){
-                            System.out.println("Lore matches");
                             return true;
                         }
                     }else if(!inInventoryMeta.hasLore() && !removableMeta.hasLore()){
-                        System.out.println("No lore found");
                         System.out.println(""+removableMeta.getLore());
                         return true;
                     }
